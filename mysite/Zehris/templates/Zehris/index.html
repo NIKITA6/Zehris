@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head><title>Folklore login</title>
+<style type="text/css">
+body {
+background-color:#ffffff;
+color: #5a5656;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+}
+a { text-decoration: none; }
+h1 { font-size: 1em; }
+h1, p {
+margin-bottom: 10px;
+}
+strong {
+font-weight: bold;
+}
+.uppercase { text-transform: uppercase; }
+
+/* ---------- LOGIN ---------- */
+#login {
+margin: 50px auto;
+width: 300px;
+}
+form fieldset input[type="text"], input[type="password"] {
+background-color: #e5e5e5;
+border: none;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+color: #5a5656;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 14px;
+height: 50px;
+outline: none;
+padding: 0px 10px;
+width: 280px;
+-webkit-appearance:none;
+}
+form fieldset input[type="submit"] {
+background-color: #008dde;
+border: none;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+color: #f4f4f4;
+cursor: pointer;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+height: 50px;
+text-transform: uppercase;
+width: 300px;
+-webkit-appearance:none;
+}
+form fieldset a {
+color: #0000FF;
+font-size: 20px;
+}
+form fieldset a:hover { text-decoration: underline; }
+.btn-round {
+background-color: #5a5656;
+border-radius: 50%;
+-moz-border-radius: 50%;
+-webkit-border-radius: 50%;
+color: #f4f4f4;
+display: block;
+font-size: 12px;
+height: 50px;
+line-height: 50px;
+margin: 30px 125px;
+text-align: center;
+text-transform: uppercase;
+width: 50px;
+}
+
+</style>
+</head>
+{% load static %}
+<body background="{% static 'polls/images/backimage.jpg' %}">
+<div id="login" style="background-color:#FFFFFF ;width: 350px;" >
+<img src="{% static 'polls/images/zeo.png' %}" style="width:200px;height:50px">
+<h1>User login</h1>
+<form id="loginForm" action="." method="POST">{% csrf_token %}
+<fieldset>
+<p>user name :<input type="text" required name="fname"></p>
+<p>Password :<input type="password" required name="password"></p>
+<p><input type="submit" value="login"></p>
+<p style="margin-left: 110px;"><a href="{% url 'login' %}">Sign Up</a></p>
+</fieldset>
+</form>
+</div>
+</body>
+</html>

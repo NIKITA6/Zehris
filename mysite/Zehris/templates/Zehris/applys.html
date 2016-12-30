@@ -1,0 +1,126 @@
+<html>
+<head><title>Apply For Leave</title>
+<style type="text/css">
+body {
+background-color:#D1E7F3;
+color: #FFFFFF;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+}
+#apply {
+margin: 30px auto;
+width: 500px;
+height: 400px;
+background-color: #002E57 ;
+}
+form h4 {
+background-color: #F8F8F8;
+border: none;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+color: #000000;
+cursor: pointer;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+height: 30px;
+text-transform: uppercase;
+width: 500px;
+text-align:center;
+}
+.exit-btn {
+border: none;
+font-family: inherit;
+font-size: inherit;
+color: inherit;
+background: none;
+cursor: pointer;
+padding: 10px 10px;
+display: inline-block;
+margin: 15px 30px;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-weight: 10;
+outline: none;
+position: relative;
+-webkit-transition: all 0.3s;
+-moz-transition: all 0.3s;
+transition: all 0.3s;
+float:right;
+}
+.exit-btn-3 {
+background-color: #008dde;
+color: #fff;
+border-radius: 7px;
+box-shadow: 0 5px #202670;
+padding: 10px 10px 10px 10px;
+float:right;
+}
+</style>
+<script type="text/javascript">
+function compareDate(date1,date2)
+{   
+    if(date1.value != ''){
+        va1=date1.value.split('/');
+        va2=date2.value.split('/');
+        date1=new Date(va1[2],va1[0],va1[1],0,0,0)
+        var difference = Date.UTC(va1[2],va1[0],va1[1],0,0,0) - Date.UTC(va2[2],va2[0],va2[1],0,0,0);
+        val = difference/1000/60/60/24;
+        if(val>0){
+	    alert('From Date is greater than ToDate!');
+            return true;
+            }
+        else{
+            if(document.getElementById("leave_type").value == "earn_l" && document.getElementById("ern_days").value < Math.abs(val)){
+	        alert("You don't have enough leave balance to avail the Earned Leave!");
+                document.getElementById("app_days").innerHTML = document.getElementById("days").value = 0;
+	        return true;
+	    }
+            if(document.getElementById("leave_type").value == "sick_l" && document.getElementById("sick_days").value < Math.abs(val)){
+	        alert("You don't have enough leave balance to avail the Sick Leave!");
+                document.getElementById("app_days").innerHTML = document.getElementById("days").value = 0;
+	        return true;
+	    }
+            document.getElementById("app_days").innerHTML = document.getElementById("days").value = Math.abs(val) + 1;
+            return false;
+          }
+        return false;
+  }
+};
+
+function resetselected() {
+    document.getElementById("app_days").innerHTML = document.getElementById("days").value = 0;
+    document.getElementById("SnapHost_Calendar").value = document.getElementById("SnapHost_Calendar2").value = '';
+};
+
+</script>
+</head>
+<body>
+<form id="loginForm" action="./welcome" method="POST">{% csrf_token %}
+<a  href="{% url 'logout' %}" class="exit-btn exit-btn-3">Logout</a>
+<div id="apply">
+{% for emp in emp_obj %}
+<h4>Apply For Leave</h4>
+    <table>
+        <tr><td>Name:</td><td>{{emp.fname}}<input type='hidden' value="{{emp.fname}}" name='fname'><input type='hidden' value="{{emp.lname}}" name='lname'></td></tr>
+        <tr><td>Leave Type:</td><td><select name="leave_type" id="leave_type" onchange="resetselected()"><option value="earn_l">Earned Leave</option><option value="sick_l">Sick Leave</option></select></td></tr>
+        <tr><td>Earn Leave Balance:</td><td>{{emp.earn_leave}}<input type="hidden" value="{{emp.earn_leave}}" name="ern_days" id="ern_days"></td></tr>
+        <tr><td>Sick Leave Balance:</td><td>{{emp.sick_leave}}<input type="hidden" value="{{emp.sick_leave}}" name="sick_days" id="sick_days"></td></tr>
+	<tr><td>Days:</td><td><span id="app_days" name="app_days">0</span><input type="hidden" value=0 name="days" id="days"></td></tr>
+        <tr><td>From:</td><td><script type="text/javascript" src="http://www.snaphost.com/jquery/Calendar.aspx"></script> &nbsp;</td></tr>
+        <tr><td>To: <script type="text/javascript">
+        $(function () {
+        $("#SnapHost_Calendar2")
+        .datepicker({ showOn: 'both', buttonImage: 'http://www.snaphost.com/jquery/calendar.gif',
+         buttonImageOnly: true, changeMonth: true, showOtherMonths: true, selectOtherMonths: true
+        });});</script></td>
+         <td><input name="SnapHost_Calendar1" id="SnapHost_Calendar2" type="text" onchange=compareDate(SnapHost_Calendar,this) /> </td></tr>
+        <tr><td>Forward To/Approver:</td><td><select><option value="manager">Manager</option><option value="lead">Lead</option></select></td></tr>
+        <tr><td>Reason: </td><td><textarea rows="3" cols="30"></textarea></td></tr>
+        <tr><td><button type="submit" name="Apply" value="Apply">Apply</button></td><td><button type="Cancel" name="Cancel" value="Cancel">Cancel</button></td></tr>
+    </table>
+{% endfor %}
+</div>
+</form>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head><title>Folklore logout</title>
+<style type="text/css">
+body {
+background-color:#D1E7F3;
+color: #5a5656;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+}
+#logout {
+height: 200px;
+margin: 180px auto;
+width: 500px;
+background-color: #D0E3F8;
+border: 3px solid #B8B8B8;
+border-radius: 3px;
+}
+h3 {
+    color: #000000;
+    font-family: "Trebuchet MS",Arial,Verdana;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<center>
+<div id="logout">
+<h3>You have successfully signed out of Folklore!</h3>
+{% load static %}
+<img src="{% static 'polls/images/zeo.png' %}" style="width:200px;height:50px">
+</div>
+</center>
+</body>
+</html>

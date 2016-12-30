@@ -1,0 +1,123 @@
+<html>
+<head><title>welcome to Folklore</title>
+<style type="text/css">
+body {
+background-color:#D1E7F3;
+color: #5a5656;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 16px;
+line-height: 1.5em;
+}
+#welcome {
+margin: 30px auto;
+width: 500px;
+height: 690px;
+background-color: #002E57;
+}
+form table tr td{
+background-color: #e5e5e5;
+color: #5a5656;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 14px;
+height: 50px;
+padding: 0px 10px;
+width: 280px;
+}
+form table tr th{
+background-color: #3571A5;
+color: #f4f4f4;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+font-size: 14px;
+height: 50px;
+padding: 0px 10px;
+width: 280px;
+}
+form button[type="submit"] {
+background-color: #008dde;
+border: none;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+color: #f4f4f4;
+cursor: pointer;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+height: 50px;
+text-transform: uppercase;
+width: 500px;
+}
+form h3 {
+border: none;
+border-radius: 3px;
+-moz-border-radius: 3px;
+-webkit-border-radius: 3px;
+color: #f4f4f4;
+cursor: pointer;
+font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+height: 30px;
+text-transform: uppercase;
+width: 500px;
+}
+.exit-btn {
+border: none;
+font-family: inherit;
+font-size: inherit;
+color: inherit;
+background: none;
+cursor: pointer;
+padding: 10px 10px;
+display: inline-block;
+margin: 15px 30px;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-weight: 10;
+outline: none;
+position: relative;
+-webkit-transition: all 0.3s;
+-moz-transition: all 0.3s;
+transition: all 0.3s;
+float:right;
+}
+.exit-btn-3 {
+background-color: #008dde;
+color: #fff;
+border-radius: 7px;
+box-shadow: 0 5px #202670;
+padding: 10px 10px 10px 10px;
+float:right;
+}
+</style>
+</head>
+<body>
+<form id="loginForm" action="./applys" method="POST">{% csrf_token %}
+<marquee behavior="alternate" style="color: #002E57;"><h2>Welcome to Folklore</h2></marquee>
+<a  href="{% url 'logout' %}" class="exit-btn exit-btn-3">Logout</a>
+<div id="welcome">
+<h3>Basic Information</h3>
+        {% for emp in emp_obj %}
+        <table>
+            <tr><td>First Name :</td><td>{{emp.fname}}<input type='hidden' value="{{emp.fname}}" name='fname'></td></tr>
+            <tr><td>Last Name</td><td>{{emp.lname}}<input type='hidden' value="{{emp.lname}}" name='lname'></td></tr>
+            <tr><td>Employee No :</td><td>{{emp.emp_no}}</td></tr>
+            <tr><td>Date of Birth :</td><td>{{emp.SnapHost_Calendar}}</td></tr>
+            <tr><td>Email :</td><td>{{emp.email}}</td></tr>
+            <tr><td>Mobile :</td><td>{{emp.mob}}</td></tr>
+            <tr><td>Address :</td><td>{{emp.address}}</td></tr>
+        </table>
+        {% endfor %}
+<h3>Leave Balance Summary</h3>
+        {% for emp in emp_obj %}
+        <table>
+            <thead>
+                <tr><th>Leave Type</th><th>Credited</th><th>Availed</th><th>Closing Balance</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Earned Leave</td><td>30</td><td>-{{emp.earn_apply_leave}}</td><td>{{emp.earn_leave}}</td></tr>
+                <tr><td>Sick Leave</td><td>9</td><td>-{{emp.sic_apply_leave}}</td><td>{{emp.sick_leave}}</td></tr>
+            </tbody>
+        </table>
+        {% endfor %}
+<button type="submit" value="Submit">Apply for leave</button>
+</div>
+</form>
+</body>
+</html>
